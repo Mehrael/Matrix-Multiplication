@@ -25,80 +25,6 @@ namespace Problem
         /// <returns>Resulting square matrix</returns>
         static public int[,] MatrixMultiply(int[,] A, int[,] B, int N)
         {
-            //int[,] result = new int[N, N];
-
-            //if (N == 1)
-            //{
-            //    result[0, 0] = M1[0, 0] * M2[0, 0];
-            //    return result;
-            //}
-
-            //int[,] a = new int[N / 2, N / 2];
-            //int[,] b = new int[N / 2, N / 2];
-            //int[,] c = new int[N / 2, N / 2];
-            //int[,] d = new int[N / 2, N / 2];
-
-            //int[,] e = new int[N / 2, N / 2];
-            //int[,] f = new int[N / 2, N / 2];
-            //int[,] g = new int[N / 2, N / 2];
-            //int[,] h = new int[N / 2, N / 2];
-
-            //// partition M1 and M2
-            //for (int i = 0; i < N / 2; i++)
-            //    for (int j = 0; j < N / 2; j++)
-            //    {
-            //        a[i, j] = M1[i, j];
-            //        b[i, j] = M1[i, j + N / 2];
-            //        c[i, j] = M1[i + N / 2, j];
-            //        d[i, j] = M1[i + N / 2, j + N / 2];
-
-            //        e[i, j] = M2[i, j];
-            //        f[i, j] = M2[i, j + N / 2];
-            //        g[i, j] = M2[i + N / 2, j];
-            //        h[i, j] = M2[i + N / 2, j + N / 2];
-            //    }
-
-            //// compute intermediate matrices
-            //int[,] s1 = MatrixSubtraction(f, h);
-            //int[,] s2 = MatrixAddition(a, b);
-            //int[,] s3 = MatrixAddition(b, d);
-            //int[,] s4 = MatrixSubtraction(g, e);
-            //int[,] s5 = MatrixAddition(a, d);
-            //int[,] s6 = MatrixAddition(e, h);
-            //int[,] s7 = MatrixSubtraction(b, d);
-            //int[,] s8 = MatrixAddition(g, h);
-            //int[,] s9 = MatrixSubtraction(a, c);
-            //int[,] s10 = MatrixAddition(e, f);
-
-
-            //int[,] p1 = MatrixMultiply(a, s1, N / 2);
-            //int[,] p2 = MatrixMultiply(s2, h, N / 2);
-            //int[,] p3 = MatrixMultiply(s3 , e, N / 2);
-            //int[,] p4 = MatrixMultiply(d, s4, N / 2);
-            //int[,] p5 = MatrixMultiply(s5, s6, N / 2);
-            //int[,] p6 = MatrixMultiply(s7, s8, N / 2);
-            //int[,] p7 = MatrixMultiply(s9, s10, N / 2);
-
-
-            //int[,] r = MatrixAddition(MatrixAddition(p5, p4), MatrixSubtraction(p6, p2));
-            //int[,] s = MatrixAddition(p1, p2);
-            //int[,] t = MatrixAddition(p3, p4);
-            //int[,] u = MatrixSubtraction(MatrixAddition(p5, p1),MatrixAddition(p3, p7));
-
-            //// combine intermediate matrices into result matrix
-            //for (int i = 0; i < N / 2; i++)
-            //{
-            //    for (int j = 0; j < N / 2; j++)
-            //    {
-            //        result[i, j] = r[i, j];
-            //        result[i, j + N / 2] = s[i, j];
-            //        result[i + N / 2, j] = t[i, j];
-            //        result[i + N / 2, j + N / 2] = u[i, j];
-            //    }
-            //}
-
-            //return result;
-
             int[,] result = new int[N, N];
             int size_over_2 = N / 2;
             if (N == 1)
@@ -131,18 +57,7 @@ namespace Problem
                     B21[i, j] = B[i + size_over_2, j];
                     B22[i, j] = B[i + size_over_2, j + size_over_2];
                 }
-            //Divide(B, B11, B12, B21, B22);
 
-            //int[,] S1 = Subtract(B12, B22);
-            //int[,] S2 = Add(A11, A12);
-            //int[,] S3 = Add(A21, A22);
-            //int[,] S4 = Subtract(B21, B11);
-            //int[,] S5 = Add(A11, A22);
-            //int[,] S6 = Add(B11, B22);
-            //int[,] S7 = Subtract(A12, A22);
-            //int[,] S8 = Add(B21, B22);
-            //int[,] S9 = Subtract(A11, A21);
-            //int[,] S10 = Add(B11, B12);   
             int[,] S1 = new int[size_over_2, size_over_2];
             int[,] S2 = new int[size_over_2, size_over_2];
             int[,] S3 = new int[size_over_2, size_over_2];
@@ -177,16 +92,7 @@ namespace Problem
             int[,] P6 = MatrixMultiply(S7, S8, size_over_2);
             int[,] P7 = MatrixMultiply(S9, S10, size_over_2);
 
-            //int[,] C11 = Subtract(Add(Add(P5, P4), P6), P2);
-            //int[,] C12 = Add(P1, P2);
-            //int[,] C21 = Add(P3, P4);  
-            //int[,] C22 = Subtract(Subtract(Add(P5, P1), P3), P7);
-
-            int[,] C12 = new int[size_over_2, size_over_2];
-            int[,] C11 = new int[size_over_2, size_over_2];
-            int[,] C21 = new int[size_over_2, size_over_2];
-            int[,] C22 = new int[size_over_2, size_over_2];
-
+            // Combine
             for (int i = 0; i < size_over_2; i++)
                 for (int j = 0; j < size_over_2; j++)
                 {
@@ -195,18 +101,6 @@ namespace Problem
                     result[i + size_over_2, j] = P3[i, j] + P4[i, j];
                     result[i + size_over_2, j + size_over_2] = P5[i, j] + P1[i, j] - P3[i, j] - P7[i, j];
                 }
-
-
-            //// Combine
-            //for (int i = 0; i < size_over_2; i++)
-            //    for (int j = 0; j < size_over_2; j++)
-            //    {
-            //        result[i, j] = C11[i, j];
-            //        result[i, j + size_over_2] = C12[i, j];
-            //        result[i + size_over_2, j] = C21[i, j];
-            //        result[i + size_over_2, j + size_over_2] = C22[i, j];
-            //    }
-
 
             return result;
         }
