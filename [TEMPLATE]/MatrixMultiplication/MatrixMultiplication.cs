@@ -23,18 +23,28 @@ namespace Problem
         /// <param name="M2">Second square matrix</param>
         /// <param name="N">Dimension (power of 2)</param>
         /// <returns>Resulting square matrix</returns>
-        static public int[,] MatrixMultiply(int[,] A, int[,] B, int N)
+        static public int[,] MatrixMultiply(int[,] M1, int[,] M2, int N)
         {
             //Console.WriteLine("N = " + N);
 
             int[,] result = new int[N, N];
             int size_over_2 = N / 2;
 
+            if (N == 2)
+            {
+                //Console.WriteLine("Return 2");
+                result[0, 0] = M1[0, 0] * M2[0, 0] + M1[0, 1] * M2[1, 0];
+                result[0, 1] = M1[0, 0] * M2[0, 1] + M1[0, 1] * M2[1, 1];
+                result[1, 0] = M1[1, 0] * M2[0, 0] + M1[1, 1] * M2[1, 0];
+                result[1, 1] = M1[1, 0] * M2[0, 1] + M1[1, 1] * M2[1, 1];
+                return result;
+            }
+
             if (N == 1)
             {
-                //Console.WriteLine("Return");
+                //Console.WriteLine("Return 1");
 
-                result[0, 0] = A[0, 0] * B[0, 0];
+                result[0, 0] = M1[0, 0] * M2[0, 0];
                 return result;
             }
 
@@ -75,32 +85,30 @@ namespace Problem
             int[,] S10 = new int[size_over_2, size_over_2];
 
 
-
             for (int i = 0; i < size_over_2; i++)
                 for (int j = 0; j < size_over_2; j++)
                 {
-                    S1[i, j] = B[i, j + size_over_2] - B[i + size_over_2, j + size_over_2];    // f - h
-                    S2[i, j] = A[i, j] + A[i, j + size_over_2];                                // a + b
-                    S3[i, j] = A[i + size_over_2, j] + A[i + size_over_2, j + size_over_2];    // c + d
-                    S4[i, j] = B[i + size_over_2, j] - B[i, j];                                // g - e
-                    S5[i, j] = A[i, j] + A[i + size_over_2, j + size_over_2];                  // a + d
-                    S6[i, j] = B[i, j] + B[i + size_over_2, j + size_over_2];                  // e + h
-                    S7[i, j] = A[i, j + size_over_2] - A[i + size_over_2, j + size_over_2];    // b - d
-                    S8[i, j] = B[i + size_over_2, j] + B[i + size_over_2, j + size_over_2];    // g + h
-                    S9[i, j] = A[i, j] - A[i + size_over_2, j];                                // a - c
-                    S10[i, j] = B[i, j] + B[i, j + size_over_2];                               // e + f
+                    S1[i, j] = M2[i, j + size_over_2] - M2[i + size_over_2, j + size_over_2];    // f - h
+                    S2[i, j] = M1[i, j] + M1[i, j + size_over_2];                                // a + b
+                    S3[i, j] = M1[i + size_over_2, j] + M1[i + size_over_2, j + size_over_2];    // c + d
+                    S4[i, j] = M2[i + size_over_2, j] - M2[i, j];                                // g - e
+                    S5[i, j] = M1[i, j] + M1[i + size_over_2, j + size_over_2];                  // a + d
+                    S6[i, j] = M2[i, j] + M2[i + size_over_2, j + size_over_2];                  // e + h
+                    S7[i, j] = M1[i, j + size_over_2] - M1[i + size_over_2, j + size_over_2];    // b - d
+                    S8[i, j] = M2[i + size_over_2, j] + M2[i + size_over_2, j + size_over_2];    // g + h
+                    S9[i, j] = M1[i, j] - M1[i + size_over_2, j];                                // a - c
+                    S10[i, j] = M2[i, j] + M2[i, j + size_over_2];                               // e + f
 
                     //A11[i, j] = A[i, j];
-                    A22[i, j] = A[i + size_over_2, j + size_over_2];
+                    A22[i, j] = M1[i + size_over_2, j + size_over_2];
                     //B11[i, j] = B[i, j];
-                    B22[i, j] = B[i + size_over_2, j + size_over_2];
+                    B22[i, j] = M2[i + size_over_2, j + size_over_2];
                     
                 }
 
-
-            int[,] P1 = MatrixMultiply(A, S1, size_over_2);
+            int[,] P1 = MatrixMultiply(M1, S1, size_over_2);
             int[,] P2 = MatrixMultiply(S2, B22, size_over_2);
-            int[,] P3 = MatrixMultiply(S3, B, size_over_2);
+            int[,] P3 = MatrixMultiply(S3, M2, size_over_2);
             int[,] P4 = MatrixMultiply(A22, S4, size_over_2);
             int[,] P5 = MatrixMultiply(S5, S6, size_over_2);
             int[,] P6 = MatrixMultiply(S7, S8, size_over_2);
