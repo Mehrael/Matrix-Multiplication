@@ -25,14 +25,11 @@ namespace Problem
         /// <returns>Resulting square matrix</returns>
         static public int[,] MatrixMultiply(int[,] M1, int[,] M2, int N)
         {
-            //Console.WriteLine("N = " + N);
-
             int[,] result = new int[N, N];
             int size_over_2 = N / 2;
 
             if (N == 2)
             {
-                //Console.WriteLine("Return 2");
                 result[0, 0] = M1[0, 0] * M2[0, 0] + M1[0, 1] * M2[1, 0];
                 result[0, 1] = M1[0, 0] * M2[0, 1] + M1[0, 1] * M2[1, 1];
                 result[1, 0] = M1[1, 0] * M2[0, 0] + M1[1, 1] * M2[1, 0];
@@ -40,38 +37,8 @@ namespace Problem
                 return result;
             }
 
-            if (N == 1)
-            {
-                //Console.WriteLine("Return 1");
-
-                result[0, 0] = M1[0, 0] * M2[0, 0];
-                return result;
-            }
-
-            //int[,] A11 = new int[size_over_2, size_over_2];
-            //int[,] A12 = new int[size_over_2, size_over_2];
-            //int[,] A21 = new int[size_over_2, size_over_2];
             int[,] A22 = new int[size_over_2, size_over_2];
-
-            //int[,] B11 = new int[size_over_2, size_over_2];
-            //int[,] B12 = new int[size_over_2, size_over_2];
-            //int[,] B21 = new int[size_over_2, size_over_2];
             int[,] B22 = new int[size_over_2, size_over_2];
-
-            //Divide
-            //for (int i = 0; i < size_over_2; i++)
-            //    for (int j = 0; j < size_over_2; j++)
-            //    {
-            //        A11[i, j] = A[i, j];
-            //        A12[i, j] = A[i, j + size_over_2];
-            //        A21[i, j] = A[i + size_over_2, j];
-            //        A22[i, j] = A[i + size_over_2, j + size_over_2];
-
-            //        B11[i, j] = B[i, j];
-            //        B12[i, j] = B[i, j + size_over_2];
-            //        B21[i, j] = B[i + size_over_2, j];
-            //        B22[i, j] = B[i + size_over_2, j + size_over_2];
-            //    }
 
             int[,] S1 = new int[size_over_2, size_over_2];
             int[,] S2 = new int[size_over_2, size_over_2];
@@ -84,7 +51,7 @@ namespace Problem
             int[,] S9 = new int[size_over_2, size_over_2];
             int[,] S10 = new int[size_over_2, size_over_2];
 
-
+            // Divide
             for (int i = 0; i < size_over_2; i++)
                 for (int j = 0; j < size_over_2; j++)
                 {
@@ -99,13 +66,11 @@ namespace Problem
                     S9[i, j] = M1[i, j] - M1[i + size_over_2, j];                                // a - c
                     S10[i, j] = M2[i, j] + M2[i, j + size_over_2];                               // e + f
 
-                    //A11[i, j] = A[i, j];
                     A22[i, j] = M1[i + size_over_2, j + size_over_2];
-                    //B11[i, j] = B[i, j];
-                    B22[i, j] = M2[i + size_over_2, j + size_over_2];
-                    
+                    B22[i, j] = M2[i + size_over_2, j + size_over_2];            
                 }
 
+            // Conquer
             int[,] P1 = MatrixMultiply(M1, S1, size_over_2);
             int[,] P2 = MatrixMultiply(S2, B22, size_over_2);
             int[,] P3 = MatrixMultiply(S3, M2, size_over_2);
