@@ -25,38 +25,43 @@ namespace Problem
         /// <returns>Resulting square matrix</returns>
         static public int[,] MatrixMultiply(int[,] A, int[,] B, int N)
         {
+            //Console.WriteLine("N = " + N);
+
             int[,] result = new int[N, N];
             int size_over_2 = N / 2;
+
             if (N == 1)
             {
+                //Console.WriteLine("Return");
+
                 result[0, 0] = A[0, 0] * B[0, 0];
                 return result;
             }
 
-            int[,] A11 = new int[size_over_2, size_over_2];
-            int[,] A12 = new int[size_over_2, size_over_2];
-            int[,] A21 = new int[size_over_2, size_over_2];
+            //int[,] A11 = new int[size_over_2, size_over_2];
+            //int[,] A12 = new int[size_over_2, size_over_2];
+            //int[,] A21 = new int[size_over_2, size_over_2];
             int[,] A22 = new int[size_over_2, size_over_2];
 
-            int[,] B11 = new int[size_over_2, size_over_2];
-            int[,] B12 = new int[size_over_2, size_over_2];
-            int[,] B21 = new int[size_over_2, size_over_2];
+            //int[,] B11 = new int[size_over_2, size_over_2];
+            //int[,] B12 = new int[size_over_2, size_over_2];
+            //int[,] B21 = new int[size_over_2, size_over_2];
             int[,] B22 = new int[size_over_2, size_over_2];
 
             //Divide
-            for (int i = 0; i < size_over_2; i++)
-                for (int j = 0; j < size_over_2; j++)
-                {
-                    A11[i, j] = A[i, j];
-                    A12[i, j] = A[i, j + size_over_2];
-                    A21[i, j] = A[i + size_over_2, j];
-                    A22[i, j] = A[i + size_over_2, j + size_over_2];    
+            //for (int i = 0; i < size_over_2; i++)
+            //    for (int j = 0; j < size_over_2; j++)
+            //    {
+            //        A11[i, j] = A[i, j];
+            //        A12[i, j] = A[i, j + size_over_2];
+            //        A21[i, j] = A[i + size_over_2, j];
+            //        A22[i, j] = A[i + size_over_2, j + size_over_2];
 
-                    B11[i, j] = B[i, j];
-                    B12[i, j] = B[i, j + size_over_2];
-                    B21[i, j] = B[i + size_over_2, j];
-                    B22[i, j] = B[i + size_over_2, j + size_over_2];
-                }
+            //        B11[i, j] = B[i, j];
+            //        B12[i, j] = B[i, j + size_over_2];
+            //        B21[i, j] = B[i + size_over_2, j];
+            //        B22[i, j] = B[i + size_over_2, j + size_over_2];
+            //    }
 
             int[,] S1 = new int[size_over_2, size_over_2];
             int[,] S2 = new int[size_over_2, size_over_2];
@@ -69,24 +74,33 @@ namespace Problem
             int[,] S9 = new int[size_over_2, size_over_2];
             int[,] S10 = new int[size_over_2, size_over_2];
 
+
+
             for (int i = 0; i < size_over_2; i++)
                 for (int j = 0; j < size_over_2; j++)
                 {
-                    S1[i, j] = B12[i, j] - B22[i, j];
-                    S2[i, j] = A11[i, j] + A12[i, j];
-                    S3[i, j] = A21[i, j] + A22[i, j];
-                    S4[i, j] = B21[i, j] - B11[i, j];
-                    S5[i, j] = A11[i, j] + A22[i, j];
-                    S6[i, j] = B11[i, j] + B22[i, j];
-                    S7[i, j] = A12[i, j] - A22[i, j];
-                    S8[i, j] = B21[i, j] + B22[i, j];
-                    S9[i, j] = A11[i, j] - A21[i, j];
-                    S10[i, j] = B11[i, j] + B12[i, j];
+                    S1[i, j] = B[i, j + size_over_2] - B[i + size_over_2, j + size_over_2];    // f - h
+                    S2[i, j] = A[i, j] + A[i, j + size_over_2];                                // a + b
+                    S3[i, j] = A[i + size_over_2, j] + A[i + size_over_2, j + size_over_2];    // c + d
+                    S4[i, j] = B[i + size_over_2, j] - B[i, j];                                // g - e
+                    S5[i, j] = A[i, j] + A[i + size_over_2, j + size_over_2];                  // a + d
+                    S6[i, j] = B[i, j] + B[i + size_over_2, j + size_over_2];                  // e + h
+                    S7[i, j] = A[i, j + size_over_2] - A[i + size_over_2, j + size_over_2];    // b - d
+                    S8[i, j] = B[i + size_over_2, j] + B[i + size_over_2, j + size_over_2];    // g + h
+                    S9[i, j] = A[i, j] - A[i + size_over_2, j];                                // a - c
+                    S10[i, j] = B[i, j] + B[i, j + size_over_2];                               // e + f
+
+                    //A11[i, j] = A[i, j];
+                    A22[i, j] = A[i + size_over_2, j + size_over_2];
+                    //B11[i, j] = B[i, j];
+                    B22[i, j] = B[i + size_over_2, j + size_over_2];
+                    
                 }
 
-            int[,] P1 = MatrixMultiply(A11, S1, size_over_2);
+
+            int[,] P1 = MatrixMultiply(A, S1, size_over_2);
             int[,] P2 = MatrixMultiply(S2, B22, size_over_2);
-            int[,] P3 = MatrixMultiply(S3, B11, size_over_2);
+            int[,] P3 = MatrixMultiply(S3, B, size_over_2);
             int[,] P4 = MatrixMultiply(A22, S4, size_over_2);
             int[,] P5 = MatrixMultiply(S5, S6, size_over_2);
             int[,] P6 = MatrixMultiply(S7, S8, size_over_2);
