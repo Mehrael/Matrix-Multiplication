@@ -26,7 +26,6 @@ namespace Problem
         static public int[,] MatrixMultiply(int[,] M1, int[,] M2, int N)
         {
             int[,] result = new int[N, N];
-            int size_over_2 = N / 2;
 
             if (N == 2)
             {
@@ -36,6 +35,20 @@ namespace Problem
                 result[1, 1] = M1[1, 0] * M2[0, 1] + M1[1, 1] * M2[1, 1];
                 return result;
             }
+
+            if (N <= 50)
+            {
+                for (int i = 0; i < N; i++)
+                    for (int j = 0; j < N; j++)
+                        for (int k = 0; k < N; k++)
+                            result[i, j] += M1[i, k] * M2[k, j];
+ 
+                return result;
+            }
+
+            int size_over_2 = N / 2;
+
+            
 
             int[,] A22 = new int[size_over_2, size_over_2];
             int[,] B22 = new int[size_over_2, size_over_2];
