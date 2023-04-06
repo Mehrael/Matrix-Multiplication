@@ -5,3 +5,7 @@ This program is an implementation of an efficient algorithm based on Strassen's 
 The algorithm used to multiply the matrices is based on Strassen's method, which is an efficient way to multiply matrices using fewer multiplications than the standard method. Strassen's method works by recursively breaking down the matrices into smaller submatrices, until the submatrices are of size 1x1, at which point the multiplication is straightforward.
 
 ![image](https://user-images.githubusercontent.com/83876261/229367088-02b4c21b-3258-478c-ae4b-4c465dfe1d08.png)
+##
+
+# Best complexity i got:
+![image](https://user-images.githubusercontent.com/83876261/230454220-94a46da8-00f6-4eb4-a718-330225cdb478.png)
