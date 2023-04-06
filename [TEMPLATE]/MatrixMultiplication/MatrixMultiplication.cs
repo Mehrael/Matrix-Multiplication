@@ -27,7 +27,15 @@ namespace Problem
         {
             int[,] result = new int[N, N];
 
-            if (N == 2)
+            if (N == 4)
+            {
+                for (int i = 0; i < 4; i++)
+                    for (int j = 0; j < 4; j++)
+                        result[i, j] = M1[i, 0] * M2[0, j] + M1[i, 1] * M2[1, j] + M1[i, 2] * M2[2, j] + M1[i, 3] * M2[3, j];
+
+                return result;
+            }
+            else if (N == 2)
             {
                 result[0, 0] = M1[0, 0] * M2[0, 0] + M1[0, 1] * M2[1, 0];
                 result[0, 1] = M1[0, 0] * M2[0, 1] + M1[0, 1] * M2[1, 1];
@@ -35,8 +43,7 @@ namespace Problem
                 result[1, 1] = M1[1, 0] * M2[0, 1] + M1[1, 1] * M2[1, 1];
                 return result;
             }
-
-            if (N < 64)
+            else if (N < 64)
             {
                 for (int i = 0; i < N; i++)
                     for (int j = 0; j < N; j++)
