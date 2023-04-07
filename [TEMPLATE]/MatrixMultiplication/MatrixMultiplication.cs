@@ -56,8 +56,6 @@ namespace Problem
 
             int size_over_2 = N / 2;
 
-            
-
             int[,] A22 = new int[size_over_2, size_over_2];
             int[,] B22 = new int[size_over_2, size_over_2];
 
