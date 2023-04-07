@@ -27,20 +27,21 @@ namespace Problem
         {
             int[,] result = new int[N, N];
 
-            if (N == 4)
-            {
-                for (int i = 0; i < 4; i++)
-                    for (int j = 0; j < 4; j++)
-                        result[i, j] = M1[i, 0] * M2[0, j] + M1[i, 1] * M2[1, j] + M1[i, 2] * M2[2, j] + M1[i, 3] * M2[3, j];
-
-                return result;
-            }
-            else if (N == 2)
+            if (N == 2)
             {
                 result[0, 0] = M1[0, 0] * M2[0, 0] + M1[0, 1] * M2[1, 0];
                 result[0, 1] = M1[0, 0] * M2[0, 1] + M1[0, 1] * M2[1, 1];
                 result[1, 0] = M1[1, 0] * M2[0, 0] + M1[1, 1] * M2[1, 0];
                 result[1, 1] = M1[1, 0] * M2[0, 1] + M1[1, 1] * M2[1, 1];
+
+                return result;
+            }
+            else if (N == 4)
+            {
+                for (int i = 0; i < 4; i++)
+                    for (int j = 0; j < 4; j++)
+                        result[i, j] = M1[i, 0] * M2[0, j] + M1[i, 1] * M2[1, j] + M1[i, 2] * M2[2, j] + M1[i, 3] * M2[3, j];
+
                 return result;
             }
             else if (N < 64)
@@ -75,15 +76,25 @@ namespace Problem
             for (int i = 0; i < size_over_2; i++)
                 for (int j = 0; j < size_over_2; j++)
                 {
+
                     S1[i, j] = M2[i, j + size_over_2] - M2[i + size_over_2, j + size_over_2];    // f - h
+                    
                     S2[i, j] = M1[i, j] + M1[i, j + size_over_2];                                // a + b
+                    
                     S3[i, j] = M1[i + size_over_2, j] + M1[i + size_over_2, j + size_over_2];    // c + d
+                    
                     S4[i, j] = M2[i + size_over_2, j] - M2[i, j];                                // g - e
+                    
                     S5[i, j] = M1[i, j] + M1[i + size_over_2, j + size_over_2];                  // a + d
+                    
                     S6[i, j] = M2[i, j] + M2[i + size_over_2, j + size_over_2];                  // e + h
+                    
                     S7[i, j] = M1[i, j + size_over_2] - M1[i + size_over_2, j + size_over_2];    // b - d
+                    
                     S8[i, j] = M2[i + size_over_2, j] + M2[i + size_over_2, j + size_over_2];    // g + h
+                    
                     S9[i, j] = M1[i, j] - M1[i + size_over_2, j];                                // a - c
+                    
                     S10[i, j] = M2[i, j] + M2[i, j + size_over_2];                               // e + f
 
                     A22[i, j] = M1[i + size_over_2, j + size_over_2];
