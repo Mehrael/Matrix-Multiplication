@@ -130,12 +130,6 @@ namespace Problem
 
             return result;
         }
-
-        static public int[,] Create_Array(int size)
-        {
-            return new int[size,size];
-        }
-
         #endregion
     }
 }
