@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Problem
@@ -26,7 +27,6 @@ namespace Problem
         static public int[,] MatrixMultiply(int[,] M1, int[,] M2, int N)
         {
             int[,] result = new int[N, N];
-
             if (N == 2)
             {
                 result[0, 0] = M1[0, 0] * M2[0, 0] + M1[0, 1] * M2[1, 0];
@@ -44,7 +44,7 @@ namespace Problem
 
                 return result;
             }
-            else if (N < 64)
+            else if (N < 128)
             {
                 for (int i = 0; i < N; i++)
                     for (int j = 0; j < N; j++)
@@ -74,7 +74,6 @@ namespace Problem
             for (int i = 0; i < size_over_2; i++)
                 for (int j = 0; j < size_over_2; j++)
                 {
-
                     S1[i, j] = M2[i, j + size_over_2] - M2[i + size_over_2, j + size_over_2];    // f - h
                     
                     S2[i, j] = M1[i, j] + M1[i, j + size_over_2];                                // a + b
@@ -99,14 +98,25 @@ namespace Problem
                     B22[i, j] = M2[i + size_over_2, j + size_over_2];            
                 }
 
+                           
             // Conquer
-            int[,] P1 = MatrixMultiply(M1, S1, size_over_2);
-            int[,] P2 = MatrixMultiply(S2, B22, size_over_2);
-            int[,] P3 = MatrixMultiply(S3, M2, size_over_2);
-            int[,] P4 = MatrixMultiply(A22, S4, size_over_2);
-            int[,] P5 = MatrixMultiply(S5, S6, size_over_2);
-            int[,] P6 = MatrixMultiply(S7, S8, size_over_2);
-            int[,] P7 = MatrixMultiply(S9, S10, size_over_2);
+            var t1 = Task.Factory.StartNew(() => MatrixMultiply(M1, S1, size_over_2));
+            var t2 = Task.Factory.StartNew(() => MatrixMultiply(S2, B22, size_over_2));
+            var t3 = Task.Factory.StartNew(() => MatrixMultiply(S3, M2, size_over_2));
+            var t4 = Task.Factory.StartNew(() => MatrixMultiply(A22, S4, size_over_2));
+            var t5 = Task.Factory.StartNew(() => MatrixMultiply(S5, S6, size_over_2));
+            var t6 = Task.Factory.StartNew(() => MatrixMultiply(S7, S8, size_over_2));
+            var t7 = Task.Factory.StartNew(() => MatrixMultiply(S9, S10, size_over_2));
+
+            Task.WaitAll(t1, t2, t3, t4, t5, t6, t7);
+
+            int[,] P1 = t1.Result;
+            int[,] P2 = t2.Result;
+            int[,] P3 = t3.Result;
+            int[,] P4 = t4.Result;
+            int[,] P5 = t5.Result;
+            int[,] P6 = t6.Result;
+            int[,] P7 = t7.Result;
 
             // Combine
             for (int i = 0; i < size_over_2; i++)
@@ -119,6 +129,11 @@ namespace Problem
                 }
 
             return result;
+        }
+
+        static public int[,] Create_Array(int size)
+        {
+            return new int[size,size];
         }
 
         #endregion
