@@ -8,4 +8,4 @@ The algorithm used to multiply the matrices is based on Strassen's method, which
 ##
 
 # Best complexity i got:
-![image](https://user-images.githubusercontent.com/83876261/230506889-fa2c39db-5c2c-498f-b288-a4159bbdcd96.png)
+![image](https://user-images.githubusercontent.com/83876261/231022638-ba8e95cd-eacc-47d6-ac96-3d6b00a71256.png)
