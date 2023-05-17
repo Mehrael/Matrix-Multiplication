@@ -6,6 +6,3 @@ The algorithm used to multiply the matrices is based on Strassen's method, which
 
 ![image](https://user-images.githubusercontent.com/83876261/229367088-02b4c21b-3258-478c-ae4b-4c465dfe1d08.png)
 ##
-
-# Best complexity i got:
-![image](https://user-images.githubusercontent.com/83876261/231022638-ba8e95cd-eacc-47d6-ac96-3d6b00a71256.png)
